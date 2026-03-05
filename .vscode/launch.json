@@ -1,0 +1,42 @@
+{
+    // Use IntelliSense para saber los atributos posibles.
+    // Mantenga el puntero para ver las descripciones de los existentes atributos.
+    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "dev Env(debug)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_dev.dart"
+        },
+     {
+            "name": "dev Env(debug) (chrome)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_dev.dart",
+            "deviceId": "chrome"  
+        },
+        {
+            "name": "dev Env(release)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_dev.dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "prod Env(debug)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_prod.dart"
+        },
+        {
+            "name": "prod Env(release)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_prod.dart",
+            "flutterMode": "release"
+        },
+
+    ]
+}
