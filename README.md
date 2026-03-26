@@ -399,7 +399,7 @@ Proyecto de formación desarrollado como material de ejemplo para la sesión 3 d
 Actualmente, tu repositorio solo conoce a origin (tu propio GitHub). Debes agregar un segundo "remoto" que apunte al del profesor. Abre tu terminal en la carpeta de tu proyecto y escribe:
 
 ```
-git remote add upstream https://github.com/nombre-del-profesor/repositorio-clase.git
+git remote add upstream https://github.com/jomazao/enyoi.git
 ```
 
 ## PASO 1.2 - Verificar conexión (Opcional)
