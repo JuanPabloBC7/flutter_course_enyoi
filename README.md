@@ -388,3 +388,90 @@ class UnauthorizedException extends NetworkException {
 ## Créditos
 
 Proyecto de formación desarrollado como material de ejemplo para la sesión 3 del curso de Flutter con Clean Architecture.
+
+---
+---
+---
+
+# JPBALAN README
+
+## PASO 1.1 - Conectar tu repositorio con el de tu profesor
+Actualmente, tu repositorio solo conoce a origin (tu propio GitHub). Debes agregar un segundo "remoto" que apunte al del profesor. Abre tu terminal en la carpeta de tu proyecto y escribe:
+
+```
+git remote add upstream https://github.com/nombre-del-profesor/repositorio-clase.git
+```
+
+## PASO 1.2 - Verificar conexión (Opcional)
+Si escribes ```git remote -v```, deberías ver algo como esto:
+- ```origin``` -> Tu repositorio (fetch y push).
+- ```upstream``` -> El del profesor (solo lo usaremos para fetch).
+
+## PASO 2.1 - El flujo de trabajo diario (La magia)
+Cada vez que el profesor suba algo nuevo y tú quieras traerlo a tu propio repositorio, sigue estos 3 pasos:
+
+### PASO A: Traer los cambios del profesor
+Esto descarga los cambios, pero no los mezcla todavía.
+
+```
+git fetch upstream
+```
+
+### PASO B: Fusionar los cambios en tu rama (Main o Master)
+Asegúrate de estar en tu rama principal ```git checkout main``` y luego combina lo que el profesor hizo:
+
+```
+git merge upstream/main
+```
+
+__(Si su rama principal se llama master en lugar de main, cambia el comando).__
+
+#### PASO B0: Error refusing to merge unrelated histories
+
+Este es un error muy común cuando intentas fusionar dos repositorios que Git considera que no tienen un "antepasado común" (es decir, cada uno se creó de forma independiente desde cero). Como el repositorio de tu profesor y el tuyo nacieron por separado, Git te protege para que no mezcles cosas que no coinciden por accidente. Para forzar la unión, solo debes agregar una bandera (flag) al comando:
+
+- Ejecuta el comando así:
+```
+git merge upstream/main --allow-unrelated-histories
+```
+
+##### ¿Qué podría pasar después?
+1. Editor de texto: Se abrirá un editor (normalmente Nano o Vim) para que confirmes el mensaje del commit de fusión.
+- Si es Nano: Presiona Ctrl + O, luego Enter y finalmente Ctrl + X.
+- Si es Vim: Escribe :wq y presiona Enter.
+
+2. Conflictos: Es muy probable que después de esto veas mensajes de "CONFLICT". No te asustes, es normal. Git simplemente te está diciendo: "Oye, tengo dos archivos README.md (o cualquier otro), dime con cuál me quedo".
+
+##### Cómo resolver los conflictos si aparecen:
+1. Abre los archivos marcados en rojo en tu editor (VS Code es excelente para esto).
+2. Verás marcas como <<<<<< HEAD (tu código) y >>>>>> upstream/main (el del profesor).
+3. Elige la opción "Accept Both Changes" (Aceptar ambos) o limpia el archivo manualmente para que quede como deseas.
+4. Una vez limpio, guarda el archivo y haz:
+
+```
+git add .
+git commit -m "Fix: fusionando historias con el repo del profesor"
+git push origin main
+```
+
+Dato importante: Solo tendrás que usar ```--allow-unrelated-histories``` esta única vez. A partir de ahora, ambos repositorios ya compartirán una historia común y los futuros ```pull``` o ```merge``` funcionarán de forma normal.
+
+### Paso C: Subir los cambios a TU GitHub
+Ahora que tu carpeta local tiene lo tuyo + lo del profesor, actualiza tu nube:
+
+```
+git push origin main
+```
+
+## Resumen Visual del Proceso
+1. Profesor hace commit -> Su GitHub cambia.
+2. Tú haces ```pull``` (fetch + merge) de ```upstream``` -> Tu computadora se actualiza.
+3. Tú haces ```push``` a ```origin``` -> Tu GitHub se actualiza.
+
+##### ¿Qué pasa si tú también editaste los archivos?
+Si tú modificaste una línea que el profesor también cambió, Git te avisará de un "Conflicto de fusión". Solo tendrás que abrir el archivo, decidir con qué versión te quedas, guardar y hacer un commit normal.
+
+##### Consejo Pro: El Fork
+Si aún no has empezado, lo más fácil es ir al repositorio del profesor en GitHub y darle al botón de "Fork". Eso crea una copia exacta en tu cuenta que ya mantiene un vínculo "invisible" con el original, facilitando mucho el proceso de sincronización desde la interfaz de GitHub (botón Sync fork).
+
+¿Te gustaría que te explique cómo resolver un conflicto de código si llegara a pasar al hacer el merge?
