@@ -1,15 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:session_3/features/login/presentation/state/login_cubit.dart';
 
 class MyBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
     print('onEvent: ${bloc.runtimeType}, $event');
-
-    if (bloc is LoginCubit) {
-      remoteLogEvent('LoginCubit event: $event');
-    }
   }
 
   @override
