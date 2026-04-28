@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:session_3/core/assets.dart';
+import 'package:session_3/core/navigation/router.dart';
 import 'package:session_3/features/login/presentation/state/login_notifier.dart';
+import 'package:session_3/features/login/presentation/widgets/password_textfield.dart';
 import 'package:session_3/features/login/presentation/widgets/social_widget.dart';
 import 'package:session_3/l10n/app_localizations.dart';
 
@@ -25,50 +27,14 @@ class LoginRiverpodView extends StatelessWidget {
 // StatefulWidget -> ConsumerStatefulWidget
 // StatelessWidget -> ConsumerWidget
 
-class BodyWidget extends ConsumerStatefulWidget {
-  const BodyWidget({super.key});
-
-  @override
-  ConsumerState<BodyWidget> createState() => _BodyWidgetState();
-}
-
-class _BodyWidgetState extends ConsumerState<BodyWidget> {
-  late bool showPassword;
+class BodyWidget extends ConsumerWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  @override
-  void initState() {
-    showPassword = false;
-    super.initState();
-  }
+  BodyWidget({super.key});
 
   @override
-  void didChangeDependencies() {
-    MediaQuery.of(context).size.width;
-    super.didChangeDependencies();
-  }
-
-  @override
-  void deactivate() {
-    // TODO: implement deactivate
-    super.deactivate();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(covariant BodyWidget oldWidget) {
-    showPassword = false;
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(
@@ -93,26 +59,7 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
                 ),
               ),
               const SizedBox(height: 16),
-              TextField(
-                controller: passwordController,
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  border: OutlineInputBorder(),
-                  suffixIcon: InkWell(
-                    child: Icon(
-                      showPassword ? Icons.visibility : Icons.visibility_off,
-                    ),
-                    onTap: () {
-                      showPassword = !showPassword;
-                      print('Toggle password visibility');
-                      print('showPassword: $showPassword');
-
-                      setState(() {});
-                    },
-                  ),
-                ),
-                obscureText: !showPassword,
-              ),
+              PasswordTextfield(passwordController: passwordController),
               const SizedBox(height: 16),
               Text(
                 AppLocalizations.of(context)!.forgot_password,
@@ -156,7 +103,7 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
                   Image.asset(Assets.loginBackground, width: 16, height: 16),
                   InkWell(
                     onTap: () {
-                      print('Navigate to registration page');
+                      context.goNamed(Routes.register);
                     },
                     child: Text(
                       'Register now',
@@ -199,7 +146,7 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
                       text: 'Register now',
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          print('Navigate to registration page');
+                          context.goNamed(Routes.register);
                         },
                       style: TextStyle(
                         color: Colors.blue,

@@ -18,6 +18,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           await _checkIfLogged(emit);
         case LoginWithEmailEvent(email: final email, password: final password):
           await _login(email, password, emit);
+        case LoginWithFacebookEvent():
+          // TODO: Handle this case.
+          throw UnimplementedError();
+        case LoginWithGoogleEvent():
+          // TODO: Handle this case.
+          throw UnimplementedError();
       }
     });
   }

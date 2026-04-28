@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:session_3/features/login/domain/use_cases/is_loggeed_use_case.dart';
 import 'package:session_3/features/login/domain/use_cases/login_use_case.dart';
+import 'package:session_3/features/login/presentation/state/login_state.dart';
 
 class LoginViewModel {
   final String title;
@@ -19,9 +20,9 @@ class LoginProvider extends ChangeNotifier {
   }) : _loginUseCase = loginUseCase ?? LoginUseCase(),
        _isLoggeedUseCase = isLoggeedUseCase ?? IsLoggeedUseCase();
 
-  String title = 'Login';
-
+  LoginState state = LoginInitialState();
   bool logged = false;
+  String title = 'Por favor, inicia sesión';
 
   Future<void> checkIfLogged() async {
     title = 'Verificando sesión...';

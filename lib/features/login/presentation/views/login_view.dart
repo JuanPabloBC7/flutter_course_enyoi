@@ -12,10 +12,13 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: ListView(
-        children: [Image.asset(Assets.loginBackground), BodyWidget()],
+    return ChangeNotifierProvider<LoginProvider>(
+      create: (_) => LoginProvider()..checkIfLogged(),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: ListView(
+          children: [Image.asset(Assets.loginBackground), BodyWidget()],
+        ),
       ),
     );
   }

@@ -8,3 +8,7 @@ class LoginWithEmailEvent extends LoginEvent {
 
   LoginWithEmailEvent(this.email, this.password);
 }
+
+class LoginWithFacebookEvent extends LoginEvent {}
+
+class LoginWithGoogleEvent extends LoginEvent {}

@@ -7,6 +7,8 @@ class LoginCubit extends Cubit<LoginState> {
   final LoginUseCase _loginUseCase;
   final IsLoggeedUseCase _isLoggeedUseCase;
 
+  bool logged = false;
+
   LoginCubit({LoginUseCase? loginUseCase, IsLoggeedUseCase? isLoggeedUseCase})
     : _loginUseCase = loginUseCase ?? LoginUseCase(),
       _isLoggeedUseCase = isLoggeedUseCase ?? IsLoggeedUseCase(),

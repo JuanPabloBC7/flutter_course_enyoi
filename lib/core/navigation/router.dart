@@ -9,22 +9,19 @@ import 'package:session_3/features/dashboard/presentation/views/dashboard_view.d
 import 'package:session_3/features/login/presentation/state/login_bloc.dart';
 import 'package:session_3/features/login/presentation/state/login_cubit.dart';
 import 'package:session_3/features/login/presentation/state/login_event.dart';
-import 'package:session_3/features/login/presentation/state/login_provider.dart';
 import 'package:session_3/features/login/presentation/views/login_bloc_view.dart';
 import 'package:session_3/features/login/presentation/views/login_cubit_view.dart';
 import 'package:session_3/features/login/presentation/views/login_riverpod_view.dart';
 import 'package:session_3/features/login/presentation/views/login_view.dart';
+import 'package:session_3/features/login/presentation/views/register_view.dart';
 import 'package:session_3/features/profile/views/dashboard_view.dart';
 
 final router = GoRouter(
   routes: [
     GoRoute(
       name: Routes.login,
-      path: '/old',
-      builder: (context, state) => ChangeNotifierProvider<LoginProvider>(
-        create: (_) => LoginProvider()..checkIfLogged(),
-        child: const LoginView(),
-      ),
+      path: '/provider',
+      builder: (context, state) => LoginView(),
     ),
     GoRoute(
       name: Routes.loginCubit,
@@ -46,6 +43,13 @@ final router = GoRouter(
       name: Routes.loginRiverpod,
       path: '/',
       builder: (context, state) => const LoginRiverpodView(),
+      routes: [
+        GoRoute(
+          name: Routes.register,
+          path: '/register',
+          builder: (context, state) => const RegisterView(),
+        ),
+      ],
     ),
 
     ShellRoute(
@@ -95,6 +99,7 @@ final router = GoRouter(
 
 abstract class Routes {
   static const String login = 'login';
+  static const String register = 'register';
   static const String loginCubit = 'login_cubit';
   static const String loginBloc = 'login_bloc';
   static const String loginRiverpod = 'login_riverpod';
