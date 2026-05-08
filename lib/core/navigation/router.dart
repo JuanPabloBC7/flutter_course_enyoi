@@ -1,23 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:session_3/features/accounts/presentation/states/credit_request_provider.dart';
 import 'package:session_3/features/accounts/presentation/views/credit_request_view.dart';
 import 'package:session_3/features/dashboard/presentation/state/dashboard_provider.dart';
 import 'package:session_3/features/dashboard/presentation/views/dashboard_view.dart';
-import 'package:session_3/features/login/presentation/state/login_provider.dart';
-import 'package:session_3/features/login/presentation/views/login_view.dart';
+import 'package:session_3/features/login_old/presentation/state/login_bloc.dart';
+import 'package:session_3/features/login_old/presentation/state/login_cubit.dart';
+import 'package:session_3/features/login_old/presentation/state/login_event.dart';
+import 'package:session_3/features/login_old/presentation/state/login_provider.dart';
+import 'package:session_3/features/login_old/presentation/views/login_bloc_view.dart';
+import 'package:session_3/features/login_old/presentation/views/login_cubit_view.dart';
+import 'package:session_3/features/login_old/presentation/views/login_riverpod_view.dart';
+import 'package:session_3/features/login_old/presentation/views/login_view.dart';
+import 'package:session_3/features/login_old/presentation/views/register_view.dart';
 import 'package:session_3/features/profile/views/dashboard_view.dart';
 
 final router = GoRouter(
   routes: [
     GoRoute(
       name: Routes.login,
-      path: '/',
-      builder: (context, state) => ChangeNotifierProvider<LoginProvider>(
-        create: (_) => LoginProvider()..checkIfLogged(),
-        child: const LoginView(),
+      path: '/provider',
+      builder: (context, state) => LoginView(),
+    ),
+    GoRoute(
+      name: Routes.loginCubit,
+      path: '/cubit',
+      builder: (context, state) => BlocProvider<LoginCubit>(
+        create: (_) => LoginCubit()..checkIfLogged(),
+        child: const LoginCubitView(),
       ),
+    ),
+    GoRoute(
+      name: Routes.loginBloc,
+      path: '/bloc',
+      builder: (context, state) => BlocProvider<LoginBloc>(
+        create: (_) => LoginBloc()..add(CheckIfLoggedEvent()),
+        child: const LoginBlocView(),
+      ),
+    ),
+    GoRoute(
+      redirect: (context, state) {
+        final loginProvider = context.watch<LoginProvider>();
+        if (loginProvider.logged) {
+          return '/dashboard'; // Redirige al dashboard si el usuario está logueado
+        } else {
+          return null; // No redirection, stay on the current route
+        }
+      },
+      name: Routes.loginRiverpod,
+      path: '/',
+      builder: (context, state) => const LoginRiverpodView(),
+      routes: [
+        GoRoute(
+          name: Routes.register,
+          path: '/register',
+          builder: (context, state) => const RegisterView(),
+        ),
+      ],
     ),
 
     ShellRoute(
@@ -67,6 +108,10 @@ final router = GoRouter(
 
 abstract class Routes {
   static const String login = 'login';
+  static const String register = 'register';
+  static const String loginCubit = 'login_cubit';
+  static const String loginBloc = 'login_bloc';
+  static const String loginRiverpod = 'login_riverpod';
   static const String dashboard = 'dashboard';
   static const String creditRequest = 'solicitud-credito';
   static const String profile = 'profile';

@@ -1,9 +1,22 @@
-class UserModel {
-  final String id;
-  final String email;
-  final String name;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  UserModel({required this.id, required this.email, required this.name});
+part 'user_model.freezed.dart';
+part 'user_model.g.dart'; 
 
-  /// Todo: implement fromJson 
+@freezed
+abstract class UserModel with _$UserModel {
+  const factory UserModel({
+    required int id,
+    required String username,
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String gender,
+    required String image,
+    required String accessToken,
+    required String newId,
+  }) = _UserModel;
+
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 }

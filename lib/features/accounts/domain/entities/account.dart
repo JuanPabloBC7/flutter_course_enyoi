@@ -4,13 +4,11 @@ import 'package:session_3/features/accounts/data/models/account_model.dart';
 enum AccountType { savings, checking, credit, investment, loan }
 
 class Account {
-
   final String userId;
   final AccountType accountType;
   final String accountId;
   final double balance;
   final double overdraftLimit;
-  
 
   bool isLocked = false;
 
@@ -21,9 +19,10 @@ class Account {
   bool get isExchangeType =>
       accountType == AccountType.savings || accountType == AccountType.checking;
 
-  bool get isOverdraftAllowed => overdraftLimit> 0 && accountType == AccountType.checking;
+  bool get isOverdraftAllowed =>
+      overdraftLimit > 0 && accountType == AccountType.checking;
 
- /*  int get overdraftLimit {
+  /*  int get overdraftLimit {
     if (accountType == AccountType.checking) {
       return (balance * Consts.overdraftLimitPercentage)
           .toInt(); // Ejemplo de límite de sobregiro para cuentas corrientes
@@ -42,7 +41,7 @@ class Account {
     required this.userId,
     required this.accountType,
     required this.accountId,
-     this.overdraftLimit = 0,
+    this.overdraftLimit = 0,
     this.balance = Consts.defaultAccountBalance,
   });
 
@@ -114,5 +113,3 @@ AccountType toAccountType(String accountType) {
       throw Exception('Invalid account type: $accountType');
   }
 }
-
-
